@@ -16,6 +16,7 @@ public class User {
     private int followersCount;
     private int followingsCount;
 
+
     public String getName() {
         return name;
     }
@@ -44,6 +45,8 @@ public class User {
         return followingsCount;
     }
 
+
+
     //deserialize user json => User
     public static User fromJSON(JSONObject json){
         User u = new User();
@@ -62,4 +65,5 @@ public class User {
         //return a user
         return u;
     }
+
 }
