@@ -60,6 +60,11 @@ public class TimelineActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void composeTweet(MenuItem item) {
+        Intent i = new Intent(this, ComposeActivity.class);
+        startActivity(i);
+    }
+
     //Return order of fragments in view pager
     public class TweetsPagerAdapter extends FragmentPagerAdapter{
         private String tabTitles[] = {"Home", "Mentions"};

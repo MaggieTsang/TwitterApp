@@ -53,6 +53,9 @@
         <activity android:name=".ProfileActivity"
             android:label="Profile" ></activity>
 
+        <activity android:name=".ComposeActivity"
+            android:label="Tweet" ></activity>
+
     </application>
 
 </manifest>
