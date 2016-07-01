@@ -2,6 +2,7 @@ package com.codepath.apps.mysimpletweets;
 
 import android.content.Context;
 
+import com.codepath.apps.mysimpletweets.models.User;
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -73,14 +74,33 @@ public class TwitterClient extends OAuthBaseClient {
         getClient().get(apiUrl, null, handler);
     }
 
-    //COMPOSING TWEET
+    //Get user info when clicked image
+    public void getUserInfo(AsyncHttpResponseHandler handler, User user){
+        String apiUrl = getApiUrl("account/verify_credentials.json");
+        RequestParams params = new RequestParams();
+        params.put("screen_name", user.getScreenName());
+        params.put("user_id", user.getUid());
+        getClient().get(apiUrl, params, handler);
 
-	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
-	 * 	  i.e getApiUrl("statuses/home_timeline.json");
-	 * 2. Define the parameters to pass to the request (query or body)
-	 *    i.e RequestParams params = new RequestParams("foo", "bar");
-	 * 3. Define the request method and make a call to the client
-	 *    i.e client.get(apiUrl, params, handler);
-	 *    i.e client.post(apiUrl, params, handler);
-	 */
+    }
+
+
+
+    //COMPOSING TWEET
+    public void composeTweet(AsyncHttpResponseHandler handler, String tweet) {
+	    //Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
+	    //   i.e getApiUrl("statuses/home_timeline.json")
+        String apiUrl = getApiUrl("statuses/update.json");
+
+        //Define the parameters to pass to the request (query or body)
+        //  i.e RequestParams params = new RequestParams("foo", "bar");
+        RequestParams params = new RequestParams();
+        params.put("status", tweet);
+        // Define the request method and make a call to the client
+        //client.get(apiUrl, params, handler);
+        client.post(apiUrl, params, handler);
+
+    }
+
+
 }

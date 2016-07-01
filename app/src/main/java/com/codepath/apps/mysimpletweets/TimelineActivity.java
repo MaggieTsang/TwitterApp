@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.apps.mysimpletweets.fragments.HomeTimelineFragment;
@@ -62,6 +63,14 @@ public class TimelineActivity extends AppCompatActivity {
 
     public void composeTweet(MenuItem item) {
         Intent i = new Intent(this, ComposeActivity.class);
+        startActivity(i);
+    }
+
+    //launch user profile, clicked on picture
+    public void onProfileView(View view) {
+
+
+        Intent i = new Intent(this, ProfileActivity.class);
         startActivity(i);
     }
 

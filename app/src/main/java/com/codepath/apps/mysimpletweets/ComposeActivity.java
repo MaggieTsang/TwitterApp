@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.apps.mysimpletweets.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -76,7 +79,24 @@ public class ComposeActivity extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         return super.onOptionsItemSelected(item);
+    }
+
+    //network request to status/update
+    public void updateStatus(View view) {
+        EditText simpleEditText = (EditText) findViewById(R.id.etStatus);
+        String strValue = simpleEditText.getText().toString();
+
+        client.composeTweet(new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                //make new tweet with JSONobject
+                super.onSuccess(statusCode, headers, response);
+            }
+        }, strValue);
+
+        simpleEditText.setText("");
+        Toast.makeText(getApplicationContext(), "Tweet posted!", Toast.LENGTH_SHORT).show();
+
     }
 }

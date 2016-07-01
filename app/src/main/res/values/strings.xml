@@ -6,5 +6,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="activity_timeline">Home Timeline</string>
     <string name="login_label">Connect to Twitter</string>
+    <string name="status_tag">status_tag</string>
 
 </resources>

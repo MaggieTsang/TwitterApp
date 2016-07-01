@@ -11,7 +11,8 @@
         android:id="@+id/btnSubmitTweet"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:onClick="updateStatus"/>
 
     <EditText
         android:layout_width="wrap_content"

@@ -31,6 +31,8 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
     public View getView(int position, View convertView, ViewGroup parent) {
         //get the tweet
         Tweet tweet = getItem(position);
+
+
         //find or inflate the template
         if (convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tweet, parent, false);
