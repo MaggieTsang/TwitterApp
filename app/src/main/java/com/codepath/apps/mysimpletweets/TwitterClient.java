@@ -2,7 +2,6 @@ package com.codepath.apps.mysimpletweets;
 
 import android.content.Context;
 
-import com.codepath.apps.mysimpletweets.models.User;
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -52,6 +51,9 @@ public class TwitterClient extends OAuthBaseClient {
         getClient().get(apiUrl, params, handler);
     }
 
+
+
+
     public void getMentionsTimeline(JsonHttpResponseHandler handler) {
         String apiUrl = getApiUrl("statuses/mentions_timeline.json");
         //Specify params
@@ -69,20 +71,30 @@ public class TwitterClient extends OAuthBaseClient {
         getClient().get(apiUrl, params, handler);
     }
 
-    public void getUserInfo(AsyncHttpResponseHandler handler){
+    public void getUserInfo(String screenName, AsyncHttpResponseHandler handler){
+        String apiUrl = getApiUrl("users/show.json");
+        RequestParams params = new RequestParams();
+        params.put("screen_name", screenName);
+        getClient().get(apiUrl, params, handler);
+    }
+
+    public void getMyUserInfo(AsyncHttpResponseHandler handler) {
         String apiUrl = getApiUrl("account/verify_credentials.json");
         getClient().get(apiUrl, null, handler);
     }
 
+    /*
     //Get user info when clicked image
-    public void getUserInfo(AsyncHttpResponseHandler handler, User user){
-        String apiUrl = getApiUrl("account/verify_credentials.json");
+    public void getUserInfo( User user, AsyncHttpResponseHandler handler){
+        String apiUrl = getApiUrl("users/show.json");
         RequestParams params = new RequestParams();
         params.put("screen_name", user.getScreenName());
         params.put("user_id", user.getUid());
         getClient().get(apiUrl, params, handler);
 
     }
+    */
+
 
 
 
@@ -101,6 +113,7 @@ public class TwitterClient extends OAuthBaseClient {
         client.post(apiUrl, params, handler);
 
     }
+
 
 
 }

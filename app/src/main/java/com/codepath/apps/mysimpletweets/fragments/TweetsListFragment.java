@@ -48,4 +48,12 @@ public class TweetsListFragment extends Fragment{
     public void addAll(List<Tweet> tweets){
         aTweets.addAll(tweets);
     }
+
+    //inserts the Tweet to the top of the list
+    public void appendTweet(Tweet tweet){
+        tweets.add(0, tweet);
+        aTweets.notifyDataSetChanged();
+        lvTweets.setSelection(0);
+    }
+
 }

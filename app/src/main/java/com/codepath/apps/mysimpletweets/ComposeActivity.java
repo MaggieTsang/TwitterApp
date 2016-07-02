@@ -1,5 +1,6 @@
 package com.codepath.apps.mysimpletweets;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -8,8 +9,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.codepath.apps.mysimpletweets.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.squareup.picasso.Picasso;
@@ -31,16 +32,9 @@ public class ComposeActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
         client = TwitterApplication.getRestClient();
+
+    }
         //Get account info
-        client.getUserInfo(new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                user = User.fromJSON(response);
-                //Current user account info
-                //getSupportActionBar().setTitle("@" + user.getScreenName());
-                populateProfileHeader(user);
-            }
-        });
 
 
 /*
@@ -58,7 +52,6 @@ public class ComposeActivity extends AppCompatActivity{
             ft.commit(); //changes the fragments
         }
         */
-    }
 
     private void populateProfileHeader(User user) {
         TextView tvName = (TextView) findViewById(R.id.tvName);
@@ -90,13 +83,21 @@ public class ComposeActivity extends AppCompatActivity{
         client.composeTweet(new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                //make new tweet with JSONobject
                 super.onSuccess(statusCode, headers, response);
+
+                //make new tweet with JSONobject
+                Tweet tweet = Tweet.fromJSON(response);
+                Intent i = new Intent();
+                i.putExtra("Tweet", tweet);
+
+                setResult(RESULT_OK, i);
+                finish();
+                //Toast.makeText(getApplicationContext(), "Tweet posted!", Toast.LENGTH_SHORT).show();
+
             }
         }, strValue);
 
-        simpleEditText.setText("");
-        Toast.makeText(getApplicationContext(), "Tweet posted!", Toast.LENGTH_SHORT).show();
+
 
     }
 }

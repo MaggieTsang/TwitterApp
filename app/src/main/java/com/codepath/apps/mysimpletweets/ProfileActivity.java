@@ -30,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         client = TwitterApplication.getRestClient();
         //Get account info
-        client.getUserInfo(new JsonHttpResponseHandler(){
+        /*client.getUserInfo(new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 user = User.fromJSON(response);
@@ -39,11 +39,15 @@ public class ProfileActivity extends AppCompatActivity {
                 populateProfileHeader(user);
             }
         });
+        */
 
 
 
         //Get screen name from activity that launches this
         String screenName = getIntent().getStringExtra("screen_name");
+
+        loadUserInfo(screenName);
+
         if (savedInstanceState == null){
             //Create user timeline fragment
             UserTimelineFragment fragmentUserTimeline = UserTimelineFragment.newInstance(screenName);
@@ -51,6 +55,31 @@ public class ProfileActivity extends AppCompatActivity {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.flContainer, fragmentUserTimeline);
             ft.commit(); //changes the fragments
+        }
+    }
+
+    private void loadUserInfo(String screenName) {
+        if (screenName!=null && !screenName.isEmpty()){
+            client.getUserInfo(screenName, new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    User user = User.fromJSON(response);
+                    //Current user account info
+                    getSupportActionBar().setTitle("@" + user.getScreenName());
+                    populateProfileHeader(user);
+                }
+            });
+        } else {
+            client.getMyUserInfo(new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    user = User.fromJSON(response);
+                    //Current user account info
+                    getSupportActionBar().setTitle("@" + user.getScreenName());
+                    populateProfileHeader(user);
+                }
+            });
+
         }
     }
 
